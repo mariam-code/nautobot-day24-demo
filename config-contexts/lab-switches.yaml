@@ -1,7 +1,0 @@
-name: lab-switches
-description: Example config context for onboarding
-data:
-  ntp_servers:
-    - 10.1.1.1
-  syslog_server:
-    - 10.1.1.2
