@@ -1,6 +1,7 @@
 from nautobot.apps.jobs import jobs
 from nautobot.dcim.models import Device
 
+name = "Examples" 
 
 class DeviceNoteJob(jobs.Job):
 
