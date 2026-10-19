@@ -13,9 +13,9 @@ class DeviceORMJob(jobs.Job):
               role__name="Access Switch",
          )
  
-     for device in devices:
-         self.logger.info(
-             f"Device: {device.name} | Status: {device.status}"
-         )
+         for device in devices:
+             self.logger.info(
+                 f"Device: {device.name} | Status: {device.status}"
+             )
         
 jobs.register_jobs(DeviceORMJob)
