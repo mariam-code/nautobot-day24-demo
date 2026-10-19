@@ -17,5 +17,8 @@ class DeviceORMJob(jobs.Job):
              self.logger.info(
                  f"Device: {device.name} | Status: {device.status}"
              )
-        
+              
+             device.cf["support_tier"] = "Day29"
+             device.validated_save()
+
 jobs.register_jobs(DeviceORMJob)
