@@ -10,10 +10,10 @@ class DeviceORMJob(jobs.Job):
      def run(self):
           
          device = Device.objects.filter(
-            role__name="Access Switch",
-     )
+              role__name="Access Switch",
+         )
  
-     for device in Devices:
+     for device in devices:
          self.logger.info(
              f"Device: {device.name} | Status: {device.status}"
          )
