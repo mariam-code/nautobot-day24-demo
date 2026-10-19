@@ -7,9 +7,9 @@ class DeviceORMJob(jobs.Job):
      class Meta:
         name = "Device ORM Job"
 
-    device = Device.objects.filter(
-        role__name="Access_Switch",
-    )
+     device = Device.objects.filter(
+         role__name="Access_Switch",
+     )
 
     def run(self):
         self.logger.info(
