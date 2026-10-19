@@ -2,33 +2,37 @@ from nautobot.apps import jobs
 from nautobot.dcim.models import Device
 from nautobot.extras.models.groups import DynamicGroup
 
-name = "Examples" 
+name = "Examples"
+
 
 class DeviceORMJob(jobs.Job):
-     class Meta:
+
+    class Meta:
         name = "Device ORM Job"
 
-     def run(self):
-          
-         devices = Device.objects.filter(
-              role__name="Access Switch",
-         )
- 
-         for device in devices:
-             self.logger.info(
-                 f"Device: {device.name} | Status: {device.status}"
-             )
-              
-             device.cf["support_tier"] = "Bronze"
-             device.validated_save()
+    def run(self):
 
-         group = DynamicGroup.objects.get(
-          name="pilot-site"
-         )
+        devices = Device.objects.filter(
+            role__name="Access Switch"
+        )
 
-     for device in group.members:
-         self.logger.info(
-             f"Device: {device.name} | Status: {device.status}"
-         )
+        self.logger.info("ORM results:")
+
+        for device in devices:
+            self.logger.info(
+                f"Device: {device.name} | Status: {device.status}"
+            )
+
+        group = DynamicGroup.objects.get(
+            name="Pilot-site group"
+        )
+
+        self.logger.info("Dynamic Group results:")
+
+        for device in group.members:
+            self.logger.info(
+                f"Device: {device.name} | Status: {device.status}"
+            )
+
 
 jobs.register_jobs(DeviceORMJob)
