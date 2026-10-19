@@ -9,7 +9,7 @@ class DeviceORMJob(jobs.Job):
 
      def run(self):
           
-         device = Device.objects.filter(
+         devices = Device.objects.filter(
               role__name="Access Switch",
          )
  
