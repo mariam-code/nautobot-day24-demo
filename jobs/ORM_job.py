@@ -11,9 +11,9 @@ class DeviceORMJob(jobs.Job):
          role__name="Access_Switch",
      )
  
-      def run(self):
-          self.logger.info(
-              f"Device: {device.name} | Status: {device.status}"
-          )
+     def run(self):
+         self.logger.info(
+             f"Device: {device.name} | Status: {device.status}"
+         )
         
 jobs.register_jobs(DeviceORMJob)
