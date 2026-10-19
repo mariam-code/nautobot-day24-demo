@@ -7,11 +7,13 @@ class DeviceORMJob(jobs.Job):
      class Meta:
         name = "Device ORM Job"
 
+     def run(self):
+          
      device = Device.objects.filter(
-         role__name="Access_Switch",
+         role__name="Access Switch",
      )
  
-     def run(self):
+     for device in Devices:
          self.logger.info(
              f"Device: {device.name} | Status: {device.status}"
          )
