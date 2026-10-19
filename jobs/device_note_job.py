@@ -1,17 +1,17 @@
-from nautobot.apps.jobs import jobs
+from nautobot.apps import jobs
 from nautobot.dcim.models import Device
 
 name = "Examples" 
 
 class DeviceNoteJob(jobs.Job):
 
-    device = ObjectVar(
+    device = jobs.ObjectVar(
         model=Device,
         description="Select a device",
         required=True,
     )
 
-    note = StringVar(
+    note = jobs.StringVar(
         description="Enter a note",
         required=False,
     )
