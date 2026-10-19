@@ -1,8 +1,8 @@
-from nautobot.apps.jobs import Job, ObjectVar, StringVar
+from nautobot.apps.jobs import jobs
 from nautobot.dcim.models import Device
 
 
-class DeviceNoteJob(Job):
+class DeviceNoteJob(jobs.Job):
 
     device = ObjectVar(
         model=Device,
@@ -22,3 +22,5 @@ class DeviceNoteJob(Job):
         self.logger.info(
             f"Selected device: {device.name} | Note: {note}"
         )
+        
+jobs.register_jobs(DeviceNoteJob)  # <- required in Nautobot 2.x
