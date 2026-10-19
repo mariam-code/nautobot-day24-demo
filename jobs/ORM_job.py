@@ -9,8 +9,8 @@ class DeviceORMJob(jobs.Job):
 
      def run(self):
           
-     device = Device.objects.filter(
-         role__name="Access Switch",
+         device = Device.objects.filter(
+            role__name="Access Switch",
      )
  
      for device in Devices:
