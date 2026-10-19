@@ -18,7 +18,7 @@ class DeviceORMJob(jobs.Job):
                  f"Device: {device.name} | Status: {device.status}"
              )
               
-             device.cf["support_tier"] = "Day29"
+             device.cf["support_tier"] = "Gold"
              device.validated_save()
 
 jobs.register_jobs(DeviceORMJob)
