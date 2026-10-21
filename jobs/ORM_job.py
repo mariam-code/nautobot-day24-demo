@@ -10,6 +10,7 @@ class DeviceORMJob(jobs.Job):
     class Meta:
         name = "Device ORM Job"
         has_sensitive_variables = False
+        approval_required =  True
 
     def run(self):
 
