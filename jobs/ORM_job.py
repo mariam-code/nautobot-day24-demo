@@ -7,12 +7,22 @@ name = "Examples"
 
 class DeviceORMJob(jobs.Job):
 
+    device = jobs.ObjectVar(
+        model=Device,
+        required=True,
+        description="Device selected from the Device page",
+    )
+
     class Meta:
         name = "Device ORM Job"
         has_sensitive_variables = False
-        approval_required =  True
+        approval_required = True
 
-    def run(self):
+    def run(self, device):
+
+        self.logger.info(
+            f"Device selected from Job Button: {device.name}"
+        )
 
         devices = Device.objects.filter(
             role__name="Access Switch"
@@ -20,9 +30,9 @@ class DeviceORMJob(jobs.Job):
 
         self.logger.info("ORM results:")
 
-        for device in devices:
+        for dev in devices:
             self.logger.info(
-                f"Device: {device.name} | Status: {device.status}"
+                f"Device: {dev.name} | Status: {dev.status}"
             )
 
         group = DynamicGroup.objects.get(
@@ -31,9 +41,9 @@ class DeviceORMJob(jobs.Job):
 
         self.logger.info("Dynamic Group results:")
 
-        for device in group.members:
+        for dev in group.members:
             self.logger.info(
-                f"Device: {device.name} | Status: {device.status}"
+                f"Device: {dev.name} | Status: {dev.status}"
             )
 
 
