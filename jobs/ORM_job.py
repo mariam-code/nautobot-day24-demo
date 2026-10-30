@@ -1,50 +1,56 @@
 from nautobot.apps import jobs
 from nautobot.dcim.models import Device
-from nautobot.extras.models.groups import DynamicGroup
 
 name = "Examples"
 
 
 class DeviceORMJob(jobs.Job):
 
-    device = jobs.ObjectVar(
-        model=Device,
-        required=True,
-        description="Device selected from the Device page",
-    )
-
     class Meta:
         name = "Device ORM Job"
-        has_sensitive_variables = False
-        approval_required = True
 
-    def run(self, device):
+    def run(self):
 
-        self.logger.info(
-            f"Device selected from Job Button: {device.name}"
-        )
+        self.logger.info("Starting Device ORM Job")
 
         devices = Device.objects.filter(
             role__name="Access Switch"
         )
 
-        self.logger.info("ORM results:")
+        if not devices.exists():
+            self.logger.warning(
+                "No devices found with role Access Switch"
+            )
+            return
 
-        for dev in devices:
-            self.logger.info(
-                f"Device: {dev.name} | Status: {dev.status}"
+        for device in devices:
+
+            self.logger.debug(
+                f"Processing device {device.name}"
             )
 
-        group = DynamicGroup.objects.get(
-            name="Pilot-site group"
+            self.logger.info(
+                f"Device: {device.name} | Status: {device.status}"
+            )
+
+            if not device.serial:
+                self.logger.warning(
+                    f"{device.name} has no serial number"
+                )
+
+            try:
+                device.cf["Support Tier"] = "Day32"
+                device.validated_save()
+
+            except Exception as exc:
+                self.logger.error(
+                    f"Failed to update {device.name}: {exc}"
+                )
+                raise
+
+        self.logger.info(
+            "Device processing complete"
         )
-
-        self.logger.info("Dynamic Group results:")
-
-        for dev in group.members:
-            self.logger.info(
-                f"Device: {dev.name} | Status: {dev.status}"
-            )
 
 
 jobs.register_jobs(DeviceORMJob)
