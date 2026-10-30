@@ -14,7 +14,7 @@ class DeviceORMJob(jobs.Job):
         self.logger.info("Starting Device ORM Job")
 
         devices = Device.objects.filter(
-            role__name="Access Switch"
+            role__name="Fake Switch"
         )
 
         if not devices.exists():
