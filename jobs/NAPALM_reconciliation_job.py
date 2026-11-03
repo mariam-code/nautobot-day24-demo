@@ -12,7 +12,7 @@ class ReconciliationJob(jobs.Job):
     def run(self):
 
         devices = Device.objects.filter(
-            location__name="containerlab:frr01"
+            name="router1"
         )
 
         self.logger.info(
