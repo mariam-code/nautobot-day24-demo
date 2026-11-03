@@ -21,8 +21,7 @@ class ReconciliationJob(jobs.Job):
 
         for device in devices:
 
-            # Simulated live hostname
-            live_hostname = device.name
+            live_hostname = "router1-live"
 
             if device.name != live_hostname:
 
